@@ -1,0 +1,40 @@
+.selectContainer {
+  width: min(400px, 99%);
+  margin: auto;
+  margin-top: 2rem;
+}
+.selectContainer form {
+  background-color: var(--navDark);
+  padding: 2rem;
+  border-radius: 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+}
+.selectContainer form input {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #fff;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 0.5rem 0.2rem;
+}
+.selectContainer form input::placeholder {
+  color: #e6e6e6;
+}
+.selectContainer form button {
+  background-color: var(--bgDark);
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease, scale 0.2s ease;
+}
+.selectContainer form button:hover {
+  background-color: hsl(240, 7%, 24%);
+}
+.selectContainer form button:active {
+  scale: 0.95;
+}
