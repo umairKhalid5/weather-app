@@ -7,6 +7,7 @@ const WeatherContext = React.createContext({
   formattedDate: () => {},
   windDirection: () => {},
   getTime: () => {},
+  getDay: () => {},
 });
 
 export const WeatherContextProvider = props => {
@@ -43,15 +44,20 @@ export const WeatherContextProvider = props => {
       .replace('at', '');
   };
 
-  let timeoptions = {
+  let timeOptions = {
     hour: 'numeric',
     minute: 'numeric',
   };
 
-  const getTime = date => {
-    return new Intl.DateTimeFormat('en-US', timeoptions).format(date * 1000);
-    // .replace('at', '');
+  const getTime = date =>
+    new Intl.DateTimeFormat('en-US', timeOptions).format(date * 1000);
+
+  let dayOptions = {
+    weekday: 'long',
   };
+
+  const getDay = date =>
+    new Intl.DateTimeFormat('en-US', dayOptions).format(date * 1000);
 
   return (
     <WeatherContext.Provider
@@ -61,6 +67,7 @@ export const WeatherContextProvider = props => {
         formattedDate,
         windDirection,
         getTime,
+        getDay,
       }}
     >
       {props.children}

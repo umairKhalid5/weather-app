@@ -1,9 +1,12 @@
+h4 {
+  font-weight: 500;
+}
 .homeContainer {
   /* background-color: var(--navDark); */
   padding: 2rem;
   border-radius: 1rem;
   color: #fff;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   width: min(1200px, 95%);
   margin-inline: auto;
   box-shadow: 0 0 15px var(--shadow);
@@ -26,7 +29,7 @@
 .left,
 .right {
   display: grid;
-  gap: 1.5rem;
+  gap: 1rem;
   z-index: 1;
 }
 /* .left {
@@ -92,14 +95,9 @@
 .date {
   font-size: 0.95rem;
 }
-.date i {
-  /* margin-right: 0.3rem; */
-  margin-left: -10px;
+.date img {
   width: 50px;
-  aspect-ratio: 1 / 1;
-}
-.date i img {
-  width: 100%;
+  margin-left: -10px;
   aspect-ratio: 1 / 1;
   object-fit: cover;
 }
@@ -119,22 +117,70 @@
     padding-left: 1rem;
   }
 }
-
-.hourBox {
+.sliderContainer {
+  display: grid;
+  padding-inline: 0.5rem;
+  background-color: hsl(240, 7%, 22%, 0.2);
+  border-radius: 0.5rem;
+  gap: 0.2rem;
+  padding-top: 0.2rem;
+}
+.sliderBox {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: 220px;
+  grid-auto-columns: 270px;
   overflow-x: auto;
   gap: 1rem;
   padding-bottom: 0.5rem;
-  /* background: rgb(33, 53, 46); */
 }
-.hour {
+.box {
+  padding: 0.5rem;
   border-radius: 0.5rem;
-  background-color: hotpink;
+  background-color: hsl(240, 7%, 22%, 0.6);
+  box-shadow: 0 0 8px hsl(240, 7%, 5%, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
-.hourBox::-webkit-scrollbar {
+.sliderBox::-webkit-scrollbar {
   height: 4px;
+}
+.box i {
+  width: 40px;
+  aspect-ratio: 1 / 1;
+}
+.box i img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+.box .boxDesc {
+  text-transform: capitalize;
+}
+.box .boxTemp {
+  font-size: 1.5rem;
+}
+.box .boxTempDaily {
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+}
+.boxTempDaily span {
+  display: block;
+}
+.boxTempDaily span:first-of-type {
+  color: hsl(197, 95%, 65%);
+}
+.boxTempDaily span:last-of-type {
+  color: hsl(16, 95%, 65%);
+}
+:where(.icon, .boxTempDaily) img {
+  width: 25px;
+  aspect-ratio: 1 / 1;
+  margin-right: 0.5rem;
+  margin-top: -0.2rem;
 }
 
 .lastUpdate {
