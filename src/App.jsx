@@ -1,17 +1,21 @@
 import React from 'react';
 import Home from './components/Home';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import SelectCity from './components/SelectCity';
+import { AnimatePresence } from 'framer-motion';
 
 function App() {
+  const location = useLocation();
   return (
     <div>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<SelectCity />} />
-        <Route path="/:city" element={<Home />} />
-      </Routes>
+      <AnimatePresence>
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<SelectCity />} />
+          <Route path="/:city" element={<Home />} />
+        </Routes>
+      </AnimatePresence>
     </div>
   );
 }

@@ -1,4 +1,5 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import classes from './SelectCity.module.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,7 +13,13 @@ const SelectCity = () => {
   };
 
   return (
-    <div className={classes.selectContainer}>
+    <motion.div
+      className={classes.selectContainer}
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.5 }}
+      transition={{ duration: 0.5 }}
+    >
       <form onSubmit={submitHandler}>
         <input
           type="text"
@@ -22,7 +29,7 @@ const SelectCity = () => {
         />
         <button>Get Weather</button>
       </form>
-    </div>
+    </motion.div>
   );
 };
 

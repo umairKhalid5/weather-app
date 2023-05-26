@@ -90,7 +90,7 @@ select {
 }
 
 ::-webkit-scrollbar-track {
-  background: #757575;
+  background: #636363;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -124,6 +124,20 @@ select {
 .flex {
   display: flex;
   align-items: center;
+}
+button {
+  background-color: var(--bgDark);
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease, scale 0.2s ease;
+}
+button:hover {
+  background-color: hsl(240, 7%, 24%);
+}
+button:active {
+  scale: 0.95;
 }
 /* //! Navbar */
 nav {

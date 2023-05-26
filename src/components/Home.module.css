@@ -22,9 +22,9 @@ h4 {
   content: '';
   position: absolute;
   inset: 0;
-  background-color: hsl(240, 7%, 15%, 0.4);
+  background-color: hsl(240, 7%, 15%, 0.5);
   z-index: 0;
-  color: hsl(240, 7%, 22%);
+  /* color: hsl(240, 7%, 22%); */
 }
 .left,
 .right {
@@ -35,9 +35,9 @@ h4 {
 /* .left {
   background-color: hsl(207, 56%, 40%);
 } */
-.left .form {
+/* .left .form {
   width: 100%;
-}
+} */
 .form input {
   width: 100%;
   background-color: transparent;
@@ -50,11 +50,20 @@ h4 {
 .form input::placeholder {
   color: #e6e6e6;
 }
+.form h4 {
+  font-size: 1.2rem;
+  margin-block: 1rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+.form h4 span {
+  font-weight: 400;
+  font-size: 0.9rem;
+}
 .majorDetails {
   width: 100%;
 }
 .majorDetails p:first-of-type {
-  font-size: 2rem;
+  font-size: 3rem;
   gap: 1rem;
   justify-content: space-between;
 }
@@ -70,16 +79,26 @@ h4 {
   font-size: 0.9rem;
 }
 .graph {
-  height: 150px;
-  width: 100%;
-  background-color: hsl(90, 40%, 50%, 0.2);
+  width: 99%;
 }
-.quality h3 {
+.miniWrapper {
+  background-color: hsl(240, 7%, 22%, 0.6);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 6px hsl(240, 7%, 5%, 0.15);
+}
+.more {
+  display: grid;
+  gap: 0.3rem;
+}
+.more h3 {
   font-weight: 500;
-  margin-bottom: 0.2rem;
+  /* margin-bottom: 0.4rem; */
+  font-size: 1.3rem;
 }
-.quality p {
+.more p {
   font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
 }
 /* .right {
   background-color: hsl(271, 56%, 40%);
@@ -92,14 +111,18 @@ h4 {
   letter-spacing: 0.5px;
   text-transform: capitalize;
 }
-.date {
+.date,
+.icons {
   font-size: 0.95rem;
 }
-.date img {
+.date img,
+.icons img {
   width: 50px;
-  margin-left: -10px;
   aspect-ratio: 1 / 1;
   object-fit: cover;
+}
+.date img {
+  margin-left: -10px;
 }
 .desc span {
   font-size: 2rem;
@@ -107,7 +130,7 @@ h4 {
 
 @media (min-width: 50em) {
   .homeContainer {
-    grid-template-columns: 290px 1fr;
+    grid-template-columns: 300px 1fr;
   }
   .left {
     border-right: 1px solid #fff;
@@ -128,7 +151,7 @@ h4 {
 .sliderBox {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: 270px;
+  grid-auto-columns: 240px;
   overflow-x: auto;
   gap: 1rem;
   padding-bottom: 0.5rem;
@@ -143,6 +166,7 @@ h4 {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  font-size: 0.875rem;
 }
 .sliderBox::-webkit-scrollbar {
   height: 4px;
@@ -171,16 +195,19 @@ h4 {
   display: block;
 }
 .boxTempDaily span:first-of-type {
-  color: hsl(197, 95%, 65%);
+  color: hsl(16, 95%, 65%);
 }
 .boxTempDaily span:last-of-type {
-  color: hsl(16, 95%, 65%);
+  color: hsl(197, 95%, 65%);
 }
 :where(.icon, .boxTempDaily) img {
   width: 25px;
   aspect-ratio: 1 / 1;
   margin-right: 0.5rem;
   margin-top: -0.2rem;
+}
+.sun {
+  gap: 1rem;
 }
 
 .lastUpdate {
