@@ -83,7 +83,7 @@ const Home = () => {
     <motion.div
       className={classes.homeContainer}
       style={{
-        backgroundImage: `url(src/assets/${bgImage}.jpg)`,
+        backgroundImage: `url(/${bgImage}.jpg)`,
       }}
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
