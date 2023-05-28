@@ -7,7 +7,7 @@ h4 {
   border-radius: 1rem;
   color: #fff;
   margin-top: 1.5rem;
-  width: min(1200px, 95%);
+  width: min(1300px, 95%);
   margin-inline: auto;
   box-shadow: 0 0 15px var(--shadow);
   display: grid;
@@ -38,6 +38,9 @@ h4 {
 /* .left .form {
   width: 100%;
 } */
+.form {
+  padding-top: 0.5rem;
+}
 .form input {
   width: 100%;
   background-color: transparent;
@@ -83,22 +86,27 @@ h4 {
 }
 .miniWrapper {
   background-color: hsl(240, 7%, 22%, 0.6);
-  padding: 0.5rem;
+  padding: 0.5rem 0.7rem;
   border-radius: 0.5rem;
   box-shadow: 0 0 6px hsl(240, 7%, 5%, 0.15);
 }
 .more {
-  display: grid;
-  gap: 0.3rem;
+  /* display: grid; */
+  /* gap: 0.3rem; */
 }
 .more h3 {
   font-weight: 500;
   /* margin-bottom: 0.4rem; */
   font-size: 1.3rem;
 }
-.more p {
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.grid p {
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.8);
+  margin-top: 0.3rem;
 }
 /* .right {
   background-color: hsl(271, 56%, 40%);
@@ -120,9 +128,11 @@ h4 {
   width: 50px;
   aspect-ratio: 1 / 1;
   object-fit: cover;
+  margin-bottom: 0.3rem;
 }
 .date img {
   margin-left: -10px;
+  margin-bottom: 0.4rem;
 }
 .desc span {
   font-size: 2rem;
@@ -130,7 +140,7 @@ h4 {
 
 @media (min-width: 50em) {
   .homeContainer {
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 330px 1fr;
   }
   .left {
     border-right: 1px solid #fff;
@@ -142,11 +152,11 @@ h4 {
 }
 .sliderContainer {
   display: grid;
-  padding-inline: 0.5rem;
+  padding-inline: 0.7rem;
   background-color: hsl(240, 7%, 22%, 0.2);
   border-radius: 0.5rem;
   gap: 0.2rem;
-  padding-top: 0.2rem;
+  padding-top: 0.5rem;
 }
 .sliderBox {
   display: grid;
@@ -155,6 +165,7 @@ h4 {
   overflow-x: auto;
   gap: 1rem;
   padding-bottom: 0.5rem;
+  scroll-snap-type: x mandatory;
 }
 .box {
   padding: 0.5rem;
@@ -165,8 +176,9 @@ h4 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.3rem;
   font-size: 0.875rem;
+  scroll-snap-align: center;
 }
 .sliderBox::-webkit-scrollbar {
   height: 4px;

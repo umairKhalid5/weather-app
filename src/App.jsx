@@ -4,6 +4,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import SelectCity from './components/SelectCity';
 import { AnimatePresence } from 'framer-motion';
+import 'leaflet/dist/leaflet.css';
 
 function App() {
   const location = useLocation();

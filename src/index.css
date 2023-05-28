@@ -48,6 +48,7 @@ body {
   line-height: 1.5;
   font-family: 'Roboto';
   background-color: var(--bgDark);
+  margin-bottom: 2rem;
   /* letter-spacing: 0.5px; */
 }
 
@@ -151,7 +152,7 @@ nav a {
   gap: 0.5rem;
 }
 nav img {
-  width: 35px;
+  width: 30px;
   aspect-ratio: 1 / 1;
   object-fit: cover;
 }

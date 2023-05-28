@@ -36,12 +36,12 @@ export const WeatherContextProvider = props => {
     day: 'numeric',
     hour: 'numeric',
     minute: 'numeric',
+    // second: 'numeric',
   };
 
   const formattedDate = date => {
-    return new Intl.DateTimeFormat('en-US', options)
-      .format(date)
-      .replace('at', '');
+    return new Intl.DateTimeFormat('en-US', options).format(date);
+    // .replace('at', '');
   };
 
   let timeOptions = {
