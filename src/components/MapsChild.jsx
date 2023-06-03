@@ -1,12 +1,10 @@
 import React from 'react';
-import { Marker, Popup, TileLayer, useMapEvent } from 'react-leaflet';
+import { Marker, Popup, TileLayer } from 'react-leaflet';
 import L from 'leaflet';
-import iconIs from '../assets/icons/storm.png';
 
-const MapsChild = ({ position, icon }) => {
-  console.log(position);
+const MapsChild = ({ position, cities, citiesWeather, curr }) => {
   const myIcon = new L.Icon({
-    iconUrl: `https://openweathermap.org/img/wn/${icon}.png`,
+    iconUrl: curr?.icon,
     // iconRetinaUrl: iconIs,
     iconSize: [50, 50],
     iconAnchor: [32, 45],
@@ -15,24 +13,41 @@ const MapsChild = ({ position, icon }) => {
   return (
     <div>
       <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <Marker position={position} icon={myIcon}>
-        <Popup>current</Popup>
+        <Popup>
+          <span className="capital">
+            {curr?.temp}
+            {' - '}
+            {curr?.desc}
+          </span>
+        </Popup>
       </Marker>
 
-      <Marker position={[33.6007, 73.0679]} icon={myIcon}>
-        <Popup>pindi</Popup>
-      </Marker>
-      {/* //? Jhelum */}
-      <Marker position={[32.9331, 73.7264]} icon={myIcon}>
-        <Popup>Jhelum</Popup>
-      </Marker>
-      {/* //? Taxila */}
-      <Marker position={[33.7476, 72.8075]} icon={myIcon}>
-        <Popup>Taxila</Popup>
-      </Marker>
+      {cities.length === citiesWeather.length &&
+        cities.map((city, idx) => (
+          <Marker
+            key={idx}
+            position={[city.latitude, city.longitude]}
+            icon={
+              new L.Icon({
+                iconUrl: `https://openweathermap.org/img/wn/${citiesWeather[idx]?.weather[0]?.icon}.png`,
+                // iconRetinaUrl: iconIs,
+                iconSize: [50, 50],
+                iconAnchor: [32, 45],
+              })
+            }
+          >
+            <Popup>
+              <span className="capital">
+                {citiesWeather[idx]?.temp.toFixed(1)}°{' - '}
+                {citiesWeather[idx]?.weather[0]?.description}
+              </span>
+            </Popup>
+          </Marker>
+        ))}
     </div>
   );
 };

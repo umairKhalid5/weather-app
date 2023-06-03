@@ -126,6 +126,10 @@ select {
   display: flex;
   align-items: center;
 }
+.capital {
+  text-transform: capitalize;
+  font-size: 1rem;
+}
 button {
   background-color: var(--bgDark);
   color: #fff;
@@ -158,4 +162,14 @@ nav img {
 }
 nav h4 {
   font-size: 1.8rem;
+}
+.mapContainer {
+  border-radius: 1rem;
+  box-shadow: 0 0 15px var(--shadow);
+  margin: 1rem auto;
+  width: min(550px, 90%);
+  height: 550px;
+  overflow: hidden;
+  /* display: grid;
+  gap: 0.5rem; */
 }

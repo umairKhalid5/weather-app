@@ -84,8 +84,8 @@ const Home = () => {
     .join('');
 
   return (
-    <>
-      <motion.div
+    <motion.div>
+      <div
         className={classes.homeContainer}
         style={{
           backgroundImage: `url(/${bgImage}.jpg)`,
@@ -139,8 +139,8 @@ const Home = () => {
             </h3>
             <div className={classes.grid}>
               <div>
-                <p>High: &nbsp;{cityWeather?.daily[0]?.temp?.min}°</p>
-                <p>Low: &nbsp;{cityWeather?.daily[0]?.temp?.max}°</p>
+                <p>High: &nbsp;{cityWeather?.daily[0]?.temp?.max}°</p>
+                <p>Low: &nbsp;{cityWeather?.daily[0]?.temp?.min}°</p>
                 <p>Humidity: &nbsp;{cityWeather?.current?.humidity}%</p>
                 <p>Cloudiness: &nbsp;{cityWeather?.current?.clouds}%</p>
               </div>
@@ -257,13 +257,18 @@ const Home = () => {
         <div className={classes.lastUpdate}>
           Last update: <span>{dateToUse}</span>
         </div>
-      </motion.div>
+      </div>
       <Maps
         coords={cityDetails?.coord}
         id={cityDetails?.id}
         icon={cityWeather?.current?.weather[0]?.icon}
+        curr={{
+          temp: cityWeather?.current?.temp.toFixed(1),
+          desc: cityWeather?.current?.weather[0]?.description,
+          icon: `https://openweathermap.org/img/wn/${cityWeather?.current?.weather[0]?.icon}.png`,
+        }}
       />
-    </>
+    </motion.div>
   );
 };
 

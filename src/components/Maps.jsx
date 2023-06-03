@@ -1,52 +1,100 @@
-import React, { useEffect } from 'react';
-import {
-  MapContainer,
-  Marker,
-  Popup,
-  TileLayer,
-  useMapEvents,
-} from 'react-leaflet';
+import React, { useEffect, useState } from 'react';
+import { MapContainer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import MapsChild from './MapsChild';
-
-const url =
-  'https://wft-geo-db.p.rapidapi.com/v1/geo/locations/51.5085-118.387099/nearbyCities';
+import { useParams } from 'react-router-dom';
 
 const options = {
   method: 'GET',
   headers: {
-    'X-RapidAPI-Key': '5c8d2488ccmsh8d348500874bcc6p14e2c6jsne5f20f854132',
+    'X-RapidAPI-Key': import.meta.env.VITE_GEO_CITIES_KEY,
     'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
   },
 };
+const key = import.meta.env.VITE_MOVIE_API_KEY;
 
-const Maps = ({ coords, icon }) => {
-  // console.log(coords);
-
+const Maps = ({ coords, icon, curr }) => {
   const position = [coords?.lat, coords?.lon];
 
+  const [cities, setCities] = useState([]);
+  const [citiesWeather, setCitiesWeather] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const params = useParams();
+
+  useEffect(() => {
+    const getCities = async (lat, long) => {
+      setIsLoading(true);
+      const url = `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?location=${lat}${
+        long > 0 ? '%2B' + long : long
+      }&radius=100&distanceUnit=MI&minPopulation=10000&limit=3`;
+      const res = await fetch(url, options);
+      const data = await res.json();
+      if (!data) return;
+      setCities(
+        data?.data?.filter(
+          city =>
+            !city?.name
+              ?.toLowerCase()
+              .includes(params?.city.toLocaleLowerCase())
+        )
+      );
+      const allCoords = data?.data
+        ?.filter(
+          city =>
+            !city?.name
+              ?.toLowerCase()
+              .includes(params?.city.toLocaleLowerCase())
+        )
+        .map(city => {
+          return {
+            lat: city.latitude,
+            lon: city.longitude,
+          };
+        });
+      allCoords.forEach((coord, idx) =>
+        setTimeout(() => {
+          getCitiesWeather(coord.lat, coord.lon);
+          if (idx === allCoords.length - 1) setIsLoading(false);
+        }, idx * 550)
+      );
+    };
+
+    const getCitiesWeather = async (lat, lon) => {
+      const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely&units=metric&appid=${key}`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (!data) return;
+      setCitiesWeather(prev => prev.concat([data?.current]));
+    };
+
+    try {
+      getCities(coords?.lat, coords?.lon);
+    } catch (err) {
+      console.log(err);
+    }
+  }, [coords]);
+
+  if (isLoading) return;
+
   return (
-    <div
-      style={{ margin: '1rem auto', width: 'min(1300px, 90%)', height: '100%' }}
-    >
+    <div className="mapContainer">
       <MapContainer
         dragging={false}
         center={position}
-        zoom={8}
-        style={{ width: '100%', height: '550px' }}
+        zoom={10}
+        style={{ width: '100%', height: '100%' }}
         scrollWheelZoom={false}
       >
-        <MapsChild position={coords} icon={icon} />
-        {/* <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        <MapsChild
+          position={coords}
+          icon={icon}
+          cities={cities}
+          citiesWeather={citiesWeather}
+          curr={curr}
         />
-        <Marker position={position}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker> */}
       </MapContainer>
     </div>
   );
