@@ -16,6 +16,7 @@ import Chart from './Chart';
 import NotFound from './NotFound';
 import LiveDate from './LiveDate';
 import Maps from './Maps';
+import FeaturedCities from './FeaturedCities';
 
 const weatherResponses = [
   'clearsky',
@@ -84,16 +85,18 @@ const Home = () => {
     .join('');
 
   return (
-    <motion.div>
+    <motion.div
+      className={classes.wrapper}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <div
         className={classes.homeContainer}
         style={{
           backgroundImage: `url(/${bgImage}.jpg)`,
         }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.5 }}
       >
         {/* //?Left */}
         <div className={`${classes.left} `}>
@@ -258,16 +261,21 @@ const Home = () => {
           Last update: <span>{dateToUse}</span>
         </div>
       </div>
-      <Maps
-        coords={cityDetails?.coord}
-        id={cityDetails?.id}
-        icon={cityWeather?.current?.weather[0]?.icon}
-        curr={{
-          temp: cityWeather?.current?.temp.toFixed(1),
-          desc: cityWeather?.current?.weather[0]?.description,
-          icon: `https://openweathermap.org/img/wn/${cityWeather?.current?.weather[0]?.icon}.png`,
-        }}
-      />
+
+      <div className={classes.mapsCitiesContainer}>
+        <Maps
+          coords={cityDetails?.coord}
+          id={cityDetails?.id}
+          icon={cityWeather?.current?.weather[0]?.icon}
+          curr={{
+            temp: cityWeather?.current?.temp.toFixed(1),
+            desc: cityWeather?.current?.weather[0]?.description,
+            icon: `https://openweathermap.org/img/wn/${cityWeather?.current?.weather[0]?.icon}.png`,
+          }}
+        />
+
+        <FeaturedCities />
+      </div>
     </motion.div>
   );
 };

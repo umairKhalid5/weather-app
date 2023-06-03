@@ -1,14 +1,17 @@
 h4 {
   font-weight: 500;
 }
+.wrapper {
+  width: min(1300px, 95%);
+  margin-inline: auto;
+}
 .homeContainer {
-  /* background-color: var(--navDark); */
   padding: 2rem;
   border-radius: 1rem;
   color: #fff;
   margin-top: 1.5rem;
-  width: min(1300px, 95%);
-  margin-inline: auto;
+  /* width: min(1300px, 95%);
+  margin-inline: auto; */
   box-shadow: 0 0 15px var(--shadow);
   display: grid;
   gap: 0.5rem;
@@ -32,12 +35,6 @@ h4 {
   gap: 1rem;
   z-index: 1;
 }
-/* .left {
-  background-color: hsl(207, 56%, 40%);
-} */
-/* .left .form {
-  width: 100%;
-} */
 .form {
   padding-top: 0.5rem;
 }
@@ -231,4 +228,25 @@ h4 {
 }
 .lastUpdate span {
   font-size: 0.85rem;
+}
+.mapsCitiesContainer {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 65em) {
+  .mapsCitiesContainer {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 30rem) {
+  .homeContainer {
+    padding: 1rem 0.5rem;
+  }
+  .overview p {
+    font-size: 2rem;
+  }
 }

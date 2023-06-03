@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import classes from './SelectCity.module.css';
 import { useNavigate } from 'react-router-dom';
+import FeaturedCities from './FeaturedCities';
 
 const SelectCity = () => {
   const navigate = useNavigate();
@@ -29,6 +30,8 @@ const SelectCity = () => {
         />
         <button>Get Weather</button>
       </form>
+
+      <FeaturedCities />
     </motion.div>
   );
 };

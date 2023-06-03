@@ -1,5 +1,5 @@
 .selectContainer {
-  width: min(500px, 90%);
+  width: min(600px, 90%);
   margin: auto;
   margin-top: 2rem;
 }
@@ -11,6 +11,7 @@
   grid-template-columns: 1fr;
   gap: 1rem;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  margin-bottom: 1.5rem;
 }
 .selectContainer form input {
   width: 100%;
@@ -23,4 +24,51 @@
 }
 .selectContainer form input::placeholder {
   color: #e6e6e6;
+}
+.featured {
+  background-color: var(--navDark);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  /* margin-top: 2rem; */
+  border-radius: 1rem;
+  padding: 2rem;
+  color: #fff;
+}
+.featured h3 {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.featured ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.featured ul li {
+  background-color: var(--bgDark);
+  transition: background-color 0.2s ease, scale 0.2s ease;
+  cursor: pointer;
+  padding: 0.8rem 1rem;
+  border-radius: 0.5rem;
+  justify-content: space-between;
+}
+.featured ul li:hover {
+  background-color: hsl(240, 7%, 24%);
+}
+.featured ul li div {
+  gap: 0.1rem;
+}
+.featured ul li img {
+  width: 40px;
+  aspect-ratio: 1 / 1;
+}
+
+@media (max-width: 50em) {
+  .featured ul {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 30em) {
+  .selectContainer form,
+  .featured {
+    padding: 1rem 0.5rem;
+  }
 }

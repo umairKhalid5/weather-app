@@ -26,7 +26,8 @@ const MapsChild = ({ position, cities, citiesWeather, curr }) => {
         </Popup>
       </Marker>
 
-      {cities.length === citiesWeather.length &&
+      {citiesWeather &&
+        cities.length === citiesWeather.length &&
         cities.map((city, idx) => (
           <Marker
             key={idx}

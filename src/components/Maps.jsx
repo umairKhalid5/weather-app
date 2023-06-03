@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MapContainer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import { motion } from 'framer-motion';
 
 import MapsChild from './MapsChild';
 import { useParams } from 'react-router-dom';
@@ -53,12 +54,16 @@ const Maps = ({ coords, icon, curr }) => {
             lon: city.longitude,
           };
         });
-      allCoords.forEach((coord, idx) =>
-        setTimeout(() => {
-          getCitiesWeather(coord.lat, coord.lon);
-          if (idx === allCoords.length - 1) setIsLoading(false);
-        }, idx * 550)
-      );
+      if (allCoords.length > 0) {
+        allCoords.forEach((coord, idx) =>
+          setTimeout(() => {
+            getCitiesWeather(coord.lat, coord.lon);
+            if (idx === allCoords.length - 1) setIsLoading(false);
+          }, idx * 550)
+        );
+      } else {
+        setIsLoading(false);
+      }
     };
 
     const getCitiesWeather = async (lat, lon) => {
@@ -79,13 +84,21 @@ const Maps = ({ coords, icon, curr }) => {
 
   if (isLoading) return;
 
+  // console.log(cities, citiesWeather);
+
   return (
-    <div className="mapContainer">
+    <motion.div
+      className="mapContainer"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <MapContainer
         dragging={false}
         center={position}
         zoom={10}
-        style={{ width: '100%', height: '100%' }}
+        style={{ width: '100%', height: '100%', borderRadius: '0.5rem' }}
         scrollWheelZoom={false}
       >
         <MapsChild
@@ -96,7 +109,7 @@ const Maps = ({ coords, icon, curr }) => {
           curr={curr}
         />
       </MapContainer>
-    </div>
+    </motion.div>
   );
 };
 
