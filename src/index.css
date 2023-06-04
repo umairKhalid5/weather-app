@@ -151,11 +151,15 @@ nav {
   width: 100%;
   background-color: var(--navDark);
   color: #fff;
-  padding: 0.6rem 2rem;
+  padding: 0.5rem 0;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
   position: sticky;
   top: 0;
   z-index: 10;
+}
+nav div {
+  width: min(1300px, 95%);
+  margin: 0 auto;
 }
 nav a {
   gap: 0.5rem;

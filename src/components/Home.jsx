@@ -29,6 +29,9 @@ const weatherResponses = [
   'thunderstorm',
   'snow',
   'mist',
+  'drizzle',
+  'overcastclouds',
+  'haze',
 ];
 
 const Home = () => {
@@ -63,7 +66,7 @@ const Home = () => {
   if (fetchingCityDetails || fetchingCityWeather) return;
   if (isError) return <NotFound />;
 
-  // console.log(cityDetails);
+  // console.log(cityWeather?.current?.weather[0]);
 
   const hourly = cityWeather?.hourly?.slice(0, 24);
   const daily = cityWeather?.daily;
@@ -75,17 +78,21 @@ const Home = () => {
     Math.floor(cityWeather?.daily[0]?.temp?.day) -
     Math.floor(cityWeather?.daily[0]?.temp?.night);
 
-  const bgImage = weatherResponses
+  let bgImage = weatherResponses
     .filter(
       res =>
         res ===
-          cityWeather?.current?.weather[0]?.description
-            .toLowerCase()
-            .replace(' ', '') ||
-        res ===
-          cityWeather?.current?.weather[0]?.main.toLowerCase().replace(' ', '')
+        cityWeather?.current?.weather[0]?.description
+          .toLowerCase()
+          .replace(' ', '')
     )
     .join('');
+  if (!bgImage.trim())
+    bgImage = weatherResponses.filter(
+      res =>
+        res ===
+        cityWeather?.current?.weather[0]?.main.toLowerCase().replace(' ', '')
+    );
 
   return (
     <motion.div
@@ -110,7 +117,7 @@ const Home = () => {
           >
             <input
               type="text"
-              placeholder="Enter city"
+              placeholder="Enter a different city"
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
             />

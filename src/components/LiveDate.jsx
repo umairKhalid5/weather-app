@@ -21,7 +21,17 @@ const LiveDate = () => {
     setLiveDate(getDate());
   }, 1000);
 
-  return <div style={{ color: 'rgba(255, 255, 255, 0.9)' }}>{liveDate}</div>;
+  return (
+    <div
+      style={{
+        color: 'rgba(255, 255, 255, 0.85)',
+        margin: '-0.6rem 0 0 2.5rem',
+        fontSize: '14px',
+      }}
+    >
+      {liveDate}
+    </div>
+  );
 };
 
 export default LiveDate;

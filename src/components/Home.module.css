@@ -9,10 +9,10 @@ h4 {
   padding: 2rem;
   border-radius: 1rem;
   color: #fff;
-  margin-top: 1.5rem;
+  margin-top: 0.75rem;
   /* width: min(1300px, 95%);
   margin-inline: auto; */
-  box-shadow: 0 0 15px var(--shadow);
+  box-shadow: 0 0 10px var(--shadow);
   display: grid;
   gap: 1rem;
   background-position: center;
@@ -48,7 +48,7 @@ h4 {
   /* padding: 0.5rem 0.2rem; */
 }
 .form input::placeholder {
-  color: #e6e6e6;
+  color: rgb(255, 255, 255, 0.8);
 }
 .form h4 {
   font-size: 1.2rem;
