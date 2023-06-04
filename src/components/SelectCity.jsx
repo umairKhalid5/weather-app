@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import FeaturedCities from './FeaturedCities';
 
 const SelectCity = () => {
+  window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+
   const navigate = useNavigate();
   const [city, setCity] = useState('');
 
@@ -28,7 +30,7 @@ const SelectCity = () => {
           value={city}
           onChange={e => setCity(e.target.value)}
         />
-        <button>Get Weather</button>
+        <button className="getWeatherBtn">Get Weather</button>
       </form>
 
       <FeaturedCities />

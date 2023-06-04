@@ -17,6 +17,7 @@ import NotFound from './NotFound';
 import LiveDate from './LiveDate';
 import Maps from './Maps';
 import FeaturedCities from './FeaturedCities';
+import countriesList from '../countries/countries.js';
 
 const weatherResponses = [
   'clearsky',
@@ -31,6 +32,8 @@ const weatherResponses = [
 ];
 
 const Home = () => {
+  window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+
   const navigate = useNavigate();
   const params = useParams();
 
@@ -138,7 +141,7 @@ const Home = () => {
 
           <div className={`${classes.more} ${classes.miniWrapper}`}>
             <h3>
-              {cityDetails?.name}, {cityDetails?.sys?.country}
+              {cityDetails?.name}, {countriesList[cityDetails?.sys?.country]}
             </h3>
             <div className={classes.grid}>
               <div>
@@ -160,19 +163,26 @@ const Home = () => {
         {/* //?Right */}
         <div className={`${classes.right}`}>
           <div className={classes.overview}>
-            <h4>Weather Forecast</h4>
+            {/* <h4>Weather Forecast</h4> */}
             <p>{cityWeather?.current?.weather[0]?.description}</p>
           </div>
 
-          <div className={`${classes.date} flex`}>
-            <img
-              src={`https://openweathermap.org/img/wn/${cityWeather?.current?.weather[0]?.icon}@2x.png`}
-              alt=""
-            />
-            <LiveDate /> -
-            <span style={{ marginLeft: '0.25rem', fontWeight: 600 }}>
-              {cityDetails?.name}, {cityDetails?.sys?.country}
-            </span>
+          <div>
+            <div className={`${classes.date} flex`}>
+              <img
+                src={`https://openweathermap.org/img/wn/${cityWeather?.current?.weather[0]?.icon}@2x.png`}
+                alt=""
+              />
+              <span
+                style={{
+                  marginLeft: '-0.1rem',
+                  fontWeight: 500,
+                }}
+              >
+                {cityDetails?.name}, {countriesList[cityDetails?.sys?.country]}
+              </span>
+            </div>
+            <LiveDate />
           </div>
 
           {/* <div className={classes.desc}>

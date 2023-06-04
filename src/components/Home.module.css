@@ -14,7 +14,7 @@ h4 {
   margin-inline: auto; */
   box-shadow: 0 0 15px var(--shadow);
   display: grid;
-  gap: 0.5rem;
+  gap: 1rem;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -87,10 +87,6 @@ h4 {
   border-radius: 0.5rem;
   box-shadow: 0 0 6px hsl(240, 7%, 5%, 0.15);
 }
-.more {
-  /* display: grid; */
-  /* gap: 0.3rem; */
-}
 .more h3 {
   font-weight: 500;
   /* margin-bottom: 0.4rem; */
@@ -103,16 +99,13 @@ h4 {
 .grid p {
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.8);
-  margin-top: 0.3rem;
+  margin-top: 0.4rem;
 }
-/* .right {
-  background-color: hsl(271, 56%, 40%);
-} */
 .overview h4 {
   font-weight: 400;
 }
 .overview p {
-  font-size: 3rem;
+  font-size: 2.5rem;
   letter-spacing: 0.5px;
   text-transform: capitalize;
 }
@@ -120,16 +113,19 @@ h4 {
 .icons {
   font-size: 0.95rem;
 }
+.date span {
+  font-size: 1rem;
+}
 .date img,
 .icons img {
   width: 50px;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  margin-bottom: 0.3rem;
+  /* margin-bottom: 0.3rem; */
 }
 .date img {
-  margin-left: -10px;
-  margin-bottom: 0.4rem;
+  margin-left: -8px;
+  /* margin-bottom: 0.4rem; */
 }
 .desc span {
   font-size: 2rem;
@@ -138,6 +134,7 @@ h4 {
 @media (min-width: 50em) {
   .homeContainer {
     grid-template-columns: 330px 1fr;
+    gap: 0;
   }
   .left {
     border-right: 1px solid #fff;
@@ -154,6 +151,9 @@ h4 {
   border-radius: 0.5rem;
   gap: 0.2rem;
   padding-top: 0.5rem;
+}
+.sliderContainer h4 {
+  font-size: 1.1rem;
 }
 .sliderBox {
   display: grid;
@@ -179,6 +179,9 @@ h4 {
 }
 .sliderBox::-webkit-scrollbar {
   height: 4px;
+}
+.box > p:first-of-type {
+  color: rgba(255, 255, 255, 0.8);
 }
 .box i {
   width: 40px;
@@ -212,7 +215,7 @@ h4 {
 :where(.icon, .boxTempDaily) img {
   width: 25px;
   aspect-ratio: 1 / 1;
-  margin-right: 0.5rem;
+  margin-right: 0.3rem;
   margin-top: -0.2rem;
 }
 .sun {
@@ -244,9 +247,42 @@ h4 {
 
 @media (max-width: 30rem) {
   .homeContainer {
-    padding: 1rem 0.5rem;
+    padding: 1rem 0.5rem 2rem;
   }
+  .majorDetails p:first-of-type {
+    font-size: 2rem;
+  }
+
   .overview p {
     font-size: 2rem;
+  }
+  .sliderContainer h4 {
+    font-size: 1rem;
+  }
+  .sliderBox {
+    grid-auto-columns: 180px;
+  }
+  .box {
+    gap: 0.4rem;
+  }
+  .box i {
+    width: 30px;
+  }
+  :where(.icon, .boxTempDaily) img {
+    width: 20px;
+  }
+  .sun {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+@media (max-width: 21.5rem) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 20rem) {
+  .homeContainer {
+    padding-bottom: 3.5rem;
   }
 }
