@@ -4,8 +4,6 @@ import classes from './SelectCity.module.css';
 import { useNavigate } from 'react-router-dom';
 import FeaturedCities from './FeaturedCities';
 import { useEffect } from 'react';
-import { useGetCityWeatherQuery } from '../services/getWeatherapi';
-import { skipToken } from '@reduxjs/toolkit/dist/query';
 
 const key = import.meta.env.VITE_OPEN_CAGE_DATA_KEY;
 
@@ -17,9 +15,6 @@ const SelectCity = () => {
 
   const navigate = useNavigate();
   const [city, setCity] = useState('');
-
-  // const { data: cityWeather, isFetching: fetchingCityWeather } =
-  //   useGetCityWeatherQuery(coords ?? skipToken);
 
   const getLocation = () => {
     if (!navigator.geolocation) return console.log('browser not supported');
@@ -72,10 +67,6 @@ const SelectCity = () => {
     }
   }, [coords, autoLocate]);
 
-  // if (fetchingCityWeather) return;
-
-  // console.log(cityWeather);
-
   const submitHandler = e => {
     e.preventDefault();
     navigate(`/${city}`);
@@ -102,7 +93,7 @@ const SelectCity = () => {
         </button>
       </form>
 
-      {/* <FeaturedCities /> */}
+      <FeaturedCities />
     </motion.div>
   );
 };

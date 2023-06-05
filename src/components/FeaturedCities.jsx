@@ -3,17 +3,6 @@ import classes from './SelectCity.module.css';
 import { useGetCityDetailsQuery } from '../services/getWeatherapi';
 import { Link } from 'react-router-dom';
 
-// const cities = [
-//   'London',
-//   'New York',
-//   'Paris',
-//   'Dubai',
-//   'Istanbul',
-//   'Tokyo',
-//   'Beijing',
-//   'Sydney',
-// ];
-
 const FeaturedCities = () => {
   const { data: londonDetails, isFetching: fetchingLondonDetails } =
     useGetCityDetailsQuery('london');

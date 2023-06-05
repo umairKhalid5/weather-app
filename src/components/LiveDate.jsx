@@ -24,7 +24,7 @@ const LiveDate = ({ current, timezone, timeZoneOffset }) => {
   return (
     <div
       style={{
-        color: 'rgba(255, 255, 255, 0.85)',
+        color: 'rgba(255, 255, 255, 0.9)',
         margin: '-0.6rem 0 0 2.5rem',
         fontSize: '14px',
       }}
