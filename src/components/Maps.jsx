@@ -33,12 +33,13 @@ const Maps = ({ coords, icon, curr }) => {
       const res = await fetch(url, options);
       const data = await res.json();
       if (!data) return;
+
       setCities(
         data?.data?.filter(
           city =>
             !city?.name
               ?.toLowerCase()
-              .includes(params?.city.toLocaleLowerCase())
+              .includes((params?.city || params?.location).toLowerCase())
         )
       );
       const allCoords = data?.data
@@ -46,7 +47,7 @@ const Maps = ({ coords, icon, curr }) => {
           city =>
             !city?.name
               ?.toLowerCase()
-              .includes(params?.city.toLocaleLowerCase())
+              .includes((params?.city || params?.location).toLowerCase())
         )
         .map(city => {
           return {
@@ -54,7 +55,8 @@ const Maps = ({ coords, icon, curr }) => {
             lon: city.longitude,
           };
         });
-      if (allCoords.length > 0) {
+
+      if (allCoords?.length > 0) {
         allCoords.forEach((coord, idx) =>
           setTimeout(() => {
             getCitiesWeather(coord.lat, coord.lon);

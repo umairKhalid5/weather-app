@@ -35,8 +35,8 @@ const MapsChild = ({ position, cities, citiesWeather, curr }) => {
       </Marker>
 
       {citiesWeather &&
-        cities.length === citiesWeather.length &&
-        cities.map((city, idx) => (
+        cities?.length === citiesWeather?.length &&
+        cities?.map((city, idx) => (
           <Marker
             key={idx}
             position={[city.latitude, city.longitude]}

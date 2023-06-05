@@ -1,8 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import classes from './Home.module.css';
 import WeatherContext from '../store/weather-context';
 import {
+  useGetCityDetailsLatLonQuery,
   useGetCityDetailsQuery,
   useGetCityWeatherQuery,
 } from '../services/getWeatherapi';
@@ -43,16 +44,25 @@ const Home = () => {
   const ctx = useContext(WeatherContext);
   const { formattedDate, windDirection, getTime, getDay } = ctx;
 
-  const [searchTerm, setSearchTerm] = useState('');
+  const searchRef = useRef();
 
   const date = new Date();
   const dateToUse = formattedDate(date);
 
   const submitHandler = e => {
     e.preventDefault();
-    navigate(`/${searchTerm}`);
-    setSearchTerm('');
+    navigate(`/${searchRef.current.value}`);
+    // searchRef.current.value=''
   };
+
+  let coords;
+  if (params.coords) {
+    const coordsSplit = params.coords.split('+');
+    coords = {
+      lat: +coordsSplit[0],
+      lon: +coordsSplit[1],
+    };
+  }
 
   const {
     data: cityDetails,
@@ -60,19 +70,27 @@ const Home = () => {
     isError,
   } = useGetCityDetailsQuery(params?.city ?? skipToken);
 
+  const {
+    data: cityDetailsLatLon,
+    isFetching: fetchingCityLatLon,
+    isErrorLatLon,
+  } = useGetCityDetailsLatLonQuery(coords ?? skipToken);
+
   const { data: cityWeather, isFetching: fetchingCityWeather } =
-    useGetCityWeatherQuery(cityDetails?.coord ?? skipToken);
+    useGetCityWeatherQuery(cityDetails?.coord ?? coords ?? skipToken);
 
-  if (fetchingCityDetails || fetchingCityWeather) return;
-  if (isError) return <NotFound />;
+  if (fetchingCityDetails || fetchingCityWeather || fetchingCityLatLon) return;
+  if (isError || isErrorLatLon) return <NotFound />;
 
-  // console.log(cityWeather?.current?.weather[0]);
+  console.log(cityDetails);
 
   const hourly = cityWeather?.hourly?.slice(0, 24);
   const daily = cityWeather?.daily;
 
   const sunriseTime = getTime(cityWeather?.current?.sunrise);
   const sunsetTime = getTime(cityWeather?.current?.sunset);
+
+  const timeZoneOffset = new Date().getTimezoneOffset() * 60;
 
   const tempDifference =
     Math.floor(cityWeather?.daily[0]?.temp?.day) -
@@ -118,8 +136,9 @@ const Home = () => {
             <input
               type="text"
               placeholder="Enter a different city"
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
+              ref={searchRef}
+              // value={searchTerm}
+              // onChange={e => setSearchTerm(e.target.value)}
             />
             {/* <h4>
             <span>Showing:</span> {cityDetails?.name},{' '}
@@ -143,12 +162,18 @@ const Home = () => {
 
           {/* //?Chart */}
           <div className={`${classes.graph} ${classes.miniWrapper}`}>
-            <Chart hourlyData={hourly} />
+            <Chart
+              hourlyData={hourly}
+              cWOffset={cityWeather?.timezone_offset}
+              tZOffset={timeZoneOffset}
+            />
           </div>
 
           <div className={`${classes.more} ${classes.miniWrapper}`}>
             <h3>
-              {cityDetails?.name}, {countriesList[cityDetails?.sys?.country]}
+              {cityDetails?.name ?? cityDetailsLatLon?.name},{' '}
+              {countriesList[cityDetails?.sys?.country] ??
+                countriesList[cityDetailsLatLon?.sys?.country]}
             </h3>
             <div className={classes.grid}>
               <div>
@@ -186,16 +211,23 @@ const Home = () => {
                   fontWeight: 500,
                 }}
               >
-                {cityDetails?.name}, {countriesList[cityDetails?.sys?.country]}
+                {cityDetails?.name ?? cityDetailsLatLon?.name},{' '}
+                {countriesList[cityDetails?.sys?.country] ??
+                  countriesList[cityDetailsLatLon?.sys?.country]}
               </span>
             </div>
-            <LiveDate />
+            <LiveDate
+              current={cityWeather?.current?.dt}
+              timezone={cityWeather?.timezone_offset}
+              timeZoneOffset={timeZoneOffset}
+            />
+            {/* {formattedDate(
+              (cityWeather?.current?.dt +
+                cityDetails?.timezone +
+                timeZoneOffset) *
+                1000
+            )} */}
           </div>
-
-          {/* <div className={classes.desc}>
-          <p>Sunrise: &nbsp;{sunrise}</p>
-          <p>Sunset: &nbsp;{sunset}</p>
-        </div> */}
 
           {/* //? Hourly */}
           <div className={classes.sliderContainer}>
@@ -203,7 +235,15 @@ const Home = () => {
             <div className={classes.sliderBox}>
               {hourly?.map((hour, i) => (
                 <div className={classes.box} key={i}>
-                  <p>{i === 0 ? 'Now' : getTime(hour?.dt)}</p>
+                  <p>
+                    {i === 0
+                      ? 'Now'
+                      : getTime(
+                          hour?.dt +
+                            cityWeather?.timezone_offset +
+                            timeZoneOffset
+                        )}
+                  </p>
                   <p className={classes.boxTemp}>{hour?.temp.toFixed(1)}°</p>
                   <div className={`${classes.icons} flex`}>
                     <i>
@@ -234,7 +274,15 @@ const Home = () => {
             <div className={classes.sliderBox}>
               {daily?.map((day, i) => (
                 <div className={classes.box} key={i}>
-                  <p>{i === 0 ? 'Today' : getDay(day?.dt)}</p>
+                  <p>
+                    {i === 0
+                      ? 'Today'
+                      : getDay(
+                          day?.dt +
+                            cityWeather?.timezone_offset +
+                            timeZoneOffset
+                        )}
+                  </p>
                   <div className={classes.boxTempDaily}>
                     <img src={temperature} alt="" />
                     <div>
@@ -275,13 +323,13 @@ const Home = () => {
         </div>
 
         <div className={classes.lastUpdate}>
-          Last update: <span>{dateToUse}</span>
+          Last updated: <span>{dateToUse}</span>
         </div>
       </div>
 
       <div className={classes.mapsCitiesContainer}>
-        <Maps
-          coords={cityDetails?.coord}
+        {/* <Maps
+          coords={cityDetails?.coord ?? coords}
           id={cityDetails?.id}
           icon={cityWeather?.current?.weather[0]?.icon}
           curr={{
@@ -291,7 +339,7 @@ const Home = () => {
           }}
         />
 
-        <FeaturedCities />
+        <FeaturedCities /> */}
       </div>
     </motion.div>
   );

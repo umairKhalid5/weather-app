@@ -23,7 +23,7 @@ ChartJS.register(
   Legend
 );
 
-const LineChart = ({ hourlyData }) => {
+const LineChart = ({ hourlyData, cWOffset, tZOffset }) => {
   const ctx = useContext(WeatherContext);
   const { getTime } = ctx;
   const temp = [];
@@ -34,7 +34,9 @@ const LineChart = ({ hourlyData }) => {
   }
 
   for (let i = 0; i < 12; i += 2) {
-    tempTimestamp.push(i === 0 ? 'Now' : getTime(hourlyData[i]?.dt));
+    tempTimestamp.push(
+      i === 0 ? 'Now' : getTime(hourlyData[i]?.dt + cWOffset + tZOffset)
+    );
   }
 
   const data = {

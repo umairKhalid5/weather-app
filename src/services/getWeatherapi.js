@@ -11,6 +11,9 @@ export const weatherApi = createApi({
     getCityDetails: builder.query({
       query: city => `weather?q=${city}&units=metric&appid=${key}`,
     }),
+    getCityDetailsLatLon: builder.query({
+      query: ({ lat, lon }) => `weather?lat=${lat}&lon=${lon}&appid=${key}`,
+    }),
     getCityWeather: builder.query({
       query: ({ lat, lon }) =>
         `onecall?lat=${lat}&lon=${lon}&exclude=minutely&units=metric&appid=${key}`,
@@ -18,4 +21,8 @@ export const weatherApi = createApi({
   }),
 });
 
-export const { useGetCityDetailsQuery, useGetCityWeatherQuery } = weatherApi;
+export const {
+  useGetCityDetailsQuery,
+  useGetCityDetailsLatLonQuery,
+  useGetCityWeatherQuery,
+} = weatherApi;

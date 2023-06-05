@@ -15,6 +15,7 @@ function App() {
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<SelectCity />} />
           <Route path="/:city" element={<Home />} />
+          <Route path="/:coords/:location" element={<Home />} />
         </Routes>
       </AnimatePresence>
     </div>

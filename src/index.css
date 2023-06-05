@@ -183,6 +183,7 @@ nav h4 {
   overflow: hidden;
   background-color: var(--navDark);
   padding: 2rem;
+  z-index: 5;
 }
 
 @media (max-width: 65em) {

@@ -1,25 +1,25 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import WeatherContext from '../store/weather-context';
 
-const LiveDate = () => {
+const LiveDate = ({ current, timezone, timeZoneOffset }) => {
   const ctx = useContext(WeatherContext);
-  const [liveDate, setLiveDate] = useState();
+  // const [liveDate, setLiveDate] = useState();
 
   const { formattedDate } = ctx;
 
-  const getDate = useCallback(() => {
-    const date = new Date();
-    return formattedDate(date);
-  }, []);
+  // const getDate = useCallback(() => {
+  //   const date = new Date();
+  //   return formattedDate(date);
+  // }, []);
 
-  useEffect(() => {
-    const date = new Date();
-    setLiveDate(formattedDate(date));
-  }, []);
+  // useEffect(() => {
+  //   const date = new Date();
+  //   setLiveDate(formattedDate(date));
+  // }, []);
 
-  setInterval(() => {
-    setLiveDate(getDate());
-  }, 1000);
+  // setInterval(() => {
+  //   setLiveDate(getDate());
+  // }, 1000);
 
   return (
     <div
@@ -29,7 +29,8 @@ const LiveDate = () => {
         fontSize: '14px',
       }}
     >
-      {liveDate}
+      {/* <div>Your Time: {liveDate}</div> */}
+      {formattedDate((current + timezone + timeZoneOffset) * 1000)}
     </div>
   );
 };
