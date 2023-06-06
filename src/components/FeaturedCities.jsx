@@ -49,7 +49,7 @@ const FeaturedCities = () => {
       <h3>Around the World:</h3>
       <ul role="list">
         {cities.map((city, idx) => (
-          <Link key={idx} to={`/${city?.name.toLowerCase()}`}>
+          <Link key={idx} to={`/weather/${city?.name.toLowerCase()}`}>
             <li className="flex">
               <p>{city?.name}</p>
               <div className="flex">

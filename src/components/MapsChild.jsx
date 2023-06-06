@@ -6,8 +6,8 @@ const MapsChild = ({ position, cities, citiesWeather, curr }) => {
   const myIcon = new L.Icon({
     iconUrl: curr?.icon,
     // iconRetinaUrl: iconIs,
-    iconSize: [50, 50],
-    iconAnchor: [32, 50],
+    iconSize: [70, 70],
+    iconAnchor: [-32, 32],
   });
 
   return (
@@ -26,7 +26,7 @@ const MapsChild = ({ position, cities, citiesWeather, curr }) => {
         </Popup>
       </Marker>
 
-      {citiesWeather &&
+      {/* {citiesWeather &&
         cities?.length === citiesWeather?.length &&
         cities?.map((city, idx) => (
           <Marker
@@ -48,7 +48,7 @@ const MapsChild = ({ position, cities, citiesWeather, curr }) => {
               </span>
             </Popup>
           </Marker>
-        ))}
+        ))} */}
     </div>
   );
 };

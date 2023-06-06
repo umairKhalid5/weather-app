@@ -19,6 +19,7 @@ import LiveDate from './LiveDate';
 import Maps from './Maps';
 import FeaturedCities from './FeaturedCities';
 import countriesList from '../countries/countries.js';
+import SearchIcon from '@mui/icons-material/Search';
 
 const weatherResponses = [
   'clearsky',
@@ -45,15 +46,19 @@ const Home = () => {
   const { formattedDate, windDirection, getTime, getDay } = ctx;
 
   const searchRef = useRef();
+  const formBtnRef = useRef();
 
   const date = new Date();
   const dateToUse = formattedDate(date);
 
   const submitHandler = e => {
     e.preventDefault();
-    navigate(`/${searchRef.current.value}`);
-    // searchRef.current.value=''
+    if (searchRef.current.value.trim().length < 1) return;
+    navigate(`/weather/${searchRef.current.value}`);
+    searchRef.current.value = '';
   };
+
+  const handleInpClick = () => formBtnRef.current.click();
 
   let coords;
   if (params.coords) {
@@ -93,10 +98,16 @@ const Home = () => {
   const hourly = cityWeather?.hourly?.slice(0, 24);
   const daily = cityWeather?.daily;
 
-  const sunriseTime = getTime(cityWeather?.current?.sunrise);
-  const sunsetTime = getTime(cityWeather?.current?.sunset);
-
   const timeZoneOffset = new Date().getTimezoneOffset() * 60;
+
+  const sunriseTime = getTime(
+    cityWeather?.current?.sunrise +
+      cityWeather?.timezone_offset +
+      timeZoneOffset
+  );
+  const sunsetTime = getTime(
+    cityWeather?.current?.sunset + cityWeather?.timezone_offset + timeZoneOffset
+  );
 
   const tempDifference =
     Math.floor(cityWeather?.daily[0]?.temp?.day) -
@@ -118,13 +129,34 @@ const Home = () => {
         cityWeather?.current?.weather[0]?.main.toLowerCase().replace(' ', '')
     );
 
+  const contVariants = {
+    hidden: {
+      opacity: 0,
+      rotateY: 90,
+    },
+    visible: {
+      opacity: 1,
+      rotateY: 0,
+      transition: { delay: 0.3, duration: 0.5 },
+    },
+    exit: {
+      x: '-100vw',
+      transition: { ease: 'easeInOut' },
+    },
+  };
+
   return (
     <motion.div
       className={classes.wrapper}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
+      // initial={{ opacity: 0, rotateY: 90 }}
+      // animate={{ opacity: 1, rotateY: 0 }}
+      // exit={{ opacity: 0, rotateY: 90 }}
+      // transition={{ duration: 0.5 }}
+      // style={{ transformOrigin: 'center' }}
+      variants={contVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
     >
       <div
         className={classes.homeContainer}
@@ -139,18 +171,33 @@ const Home = () => {
             onSubmit={submitHandler}
             style={{ paddingTop: '1rem' }}
           >
-            <input
-              type="text"
-              placeholder="Enter a different city"
-              ref={searchRef}
-              // value={searchTerm}
-              // onChange={e => setSearchTerm(e.target.value)}
-            />
+            <div className="inputContainer home">
+              <input
+                type="text"
+                placeholder="Enter a different city"
+                ref={searchRef}
+                // value={searchTerm}
+                // onChange={e => setSearchTerm(e.target.value)}
+              />
+              <i onClick={handleInpClick}>
+                <SearchIcon />
+              </i>
+            </div>
             <h4>
               <span>Current:</span>{' '}
               {cityDetails?.name ?? cityDetailsLatLon?.name},{' '}
               {cityDetails?.sys?.country ?? cityDetailsLatLon?.sys?.country}
             </h4>
+            <button
+              ref={formBtnRef}
+              style={{
+                visibility: 'hidden',
+                position: 'absolute',
+                transform: 'translate(-200vw, -200vh)',
+              }}
+            >
+              Submit
+            </button>
           </form>
 
           <div className={`${classes.majorDetails} ${classes.miniWrapper}`}>
@@ -336,7 +383,7 @@ const Home = () => {
           curr={{
             temp: cityWeather?.current?.temp.toFixed(1),
             desc: cityWeather?.current?.weather[0]?.description,
-            icon: `https://openweathermap.org/img/wn/${cityWeather?.current?.weather[0]?.icon}.png`,
+            icon: `https://openweathermap.org/img/wn/${cityWeather?.current?.weather[0]?.icon}@2x.png`,
           }}
         />
 

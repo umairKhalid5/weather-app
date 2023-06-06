@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import classes from './SelectCity.module.css';
 import { useNavigate } from 'react-router-dom';
 import FeaturedCities from './FeaturedCities';
 import { useEffect } from 'react';
+import SearchIcon from '@mui/icons-material/Search';
 
 const key = import.meta.env.VITE_OPEN_CAGE_DATA_KEY;
 
 const SelectCity = () => {
   window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+
+  const getWeatherRef = useRef();
 
   const [autoLocate, setAutoLocate] = useState(false);
   const [coords, setCoords] = useState(null);
@@ -48,6 +51,7 @@ const SelectCity = () => {
 
       if (!data) return;
       // console.log(data?.results[0]?.components);
+      setCity('');
       const details = data?.results[0]?.components;
       const district = details?.district?.replace('District', '').trim();
       const city = details?.city;
@@ -57,7 +61,7 @@ const SelectCity = () => {
       const location = subdistrict ?? county ?? town ?? city ?? district;
       // console.log(location);
 
-      navigate(`/${lat}+${lon}/${location.toLowerCase()}`);
+      navigate(`/weather/${lat}+${lon}/${location.toLowerCase()}`);
     };
 
     try {
@@ -69,29 +73,66 @@ const SelectCity = () => {
 
   const submitHandler = e => {
     e.preventDefault();
-    navigate(`/${city}`);
+    navigate(`/weather/${city}`);
+  };
+
+  const cityVariants = {
+    hidden: {
+      opacity: 0,
+      scale: 0,
+    },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { delay: 0.3, duration: 0.5 },
+    },
+    exit: {
+      x: '-100vw',
+      transition: { ease: 'easeInOut' },
+    },
   };
 
   return (
     <motion.div
       className={classes.selectContainer}
-      initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.5 }}
-      transition={{ duration: 0.5 }}
+      // initial={{ opacity: 0, scale: 0 }}
+      // animate={{ opacity: 1, scale: 1 }}
+      // exit={{ opacity: 0, scale: 0 }}
+      // transition={{ duration: 0.5 }}
+      variants={cityVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      style={{ transformOrigin: 'top' }}
     >
-      <form onSubmit={submitHandler}>
-        <input
-          type="text"
-          placeholder="Enter city"
-          value={city}
-          onChange={e => setCity(e.target.value)}
-        />
-        <button className="getWeatherBtn">Get Weather</button>
-        <button className="getWeatherBtn" onClick={() => setAutoLocate(true)}>
+      <div className={classes.formWrapper}>
+        <form onSubmit={submitHandler}>
+          <div className="inputContainer b-bottom">
+            <input
+              type="text"
+              placeholder="Enter city"
+              value={city}
+              onChange={e => setCity(e.target.value)}
+            />
+            <i onClick={() => getWeatherRef.current.click()}>
+              <SearchIcon />
+            </i>
+          </div>
+          <button
+            ref={getWeatherRef}
+            disabled={!city.trim()}
+            className="getWeatherBtn"
+          >
+            Get Weather
+          </button>
+        </form>
+        <button
+          className={`getWeatherBtn ${classes.autoLocate}`}
+          onClick={() => setAutoLocate(true)}
+        >
           Auto Locate
         </button>
-      </form>
+      </div>
 
       <FeaturedCities />
     </motion.div>

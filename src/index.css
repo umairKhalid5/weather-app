@@ -51,6 +51,7 @@ body {
   font-family: 'Roboto';
   background-color: var(--bgDark);
   margin-bottom: 2rem;
+  overflow-x: hidden;
   /* letter-spacing: 0.5px; */
 }
 
@@ -132,6 +133,27 @@ select {
   text-transform: capitalize;
   font-size: 1rem;
 }
+.inputContainer {
+  position: relative;
+  border-bottom: 2px solid #dbdbdb;
+}
+/* .inputContainer.b-bottom {
+} */
+.inputContainer i {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-45%);
+  color: #dbdbdb;
+  cursor: pointer;
+}
+.inputContainer.home i svg {
+  font-size: 1.2rem;
+  right: 0.2rem;
+}
+.inputContainer.home i {
+  right: 0;
+}
 button {
   background-color: var(--bgDark);
   color: #fff;
@@ -145,6 +167,12 @@ button:hover {
 }
 button:active {
   scale: 0.95;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  scale: 1;
+  background-color: hsl(240, 7%, 22%);
 }
 /* //! Navbar */
 nav {
