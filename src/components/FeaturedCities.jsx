@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './SelectCity.module.css';
 import { useGetCityDetailsQuery } from '../services/getWeatherapi';
 import { Link } from 'react-router-dom';
+import Loader from './Loader';
 
 const FeaturedCities = () => {
   const { data: londonDetails, isFetching: fetchingLondonDetails } =
@@ -31,7 +32,7 @@ const FeaturedCities = () => {
     fetchingBeijingDetails ||
     fetchingSydneyDetails
   )
-    return;
+    return <Loader />;
 
   const cities = [
     londonDetails,

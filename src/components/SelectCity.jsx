@@ -28,7 +28,6 @@ const SelectCity = () => {
           lat: position?.coords?.latitude,
           lon: position?.coords?.longitude,
         });
-        // console.log(position);
       },
       error => {
         console.log(error);
@@ -84,10 +83,10 @@ const SelectCity = () => {
     visible: {
       opacity: 1,
       scale: 1,
-      transition: { delay: 0.3, duration: 0.5 },
+      transition: { delay: 0.3, duration: 0.6 },
     },
     exit: {
-      x: '-100vw',
+      y: '110vh',
       transition: { ease: 'easeInOut' },
     },
   };

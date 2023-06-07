@@ -7,7 +7,7 @@ const MapsChild = ({ position, cities, citiesWeather, curr }) => {
     iconUrl: curr?.icon,
     // iconRetinaUrl: iconIs,
     iconSize: [70, 70],
-    iconAnchor: [-32, 32],
+    iconAnchor: [-32, 60],
   });
 
   return (
@@ -19,8 +19,7 @@ const MapsChild = ({ position, cities, citiesWeather, curr }) => {
       <Marker position={position} icon={myIcon}>
         <Popup>
           <span className="capital">
-            {curr?.temp}
-            {' - '}
+            {curr?.temp}°{' - '}
             {curr?.desc}
           </span>
         </Popup>

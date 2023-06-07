@@ -20,6 +20,7 @@ import Maps from './Maps';
 import FeaturedCities from './FeaturedCities';
 import countriesList from '../countries/countries.js';
 import SearchIcon from '@mui/icons-material/Search';
+import Loader from './Loader';
 
 const weatherResponses = [
   'clearsky',
@@ -84,7 +85,8 @@ const Home = () => {
   const { data: cityWeather, isFetching: fetchingCityWeather } =
     useGetCityWeatherQuery(cityDetails?.coord ?? coords ?? skipToken);
 
-  if (fetchingCityDetails || fetchingCityWeather || fetchingCityLatLon) return;
+  if (fetchingCityDetails || fetchingCityWeather || fetchingCityLatLon)
+    return <Loader />;
   if (isError || isErrorLatLon) return <NotFound />;
 
   // console.log(cityWeather?.current);
@@ -137,7 +139,7 @@ const Home = () => {
     visible: {
       opacity: 1,
       rotateY: 0,
-      transition: { delay: 0.3, duration: 0.5 },
+      transition: { delay: 0.3, duration: 0.6 },
     },
     exit: {
       x: '-100vw',
