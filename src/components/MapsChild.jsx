@@ -2,7 +2,7 @@ import React from 'react';
 import { Marker, Popup, TileLayer } from 'react-leaflet';
 import L from 'leaflet';
 
-const MapsChild = ({ position, cities, citiesWeather, curr }) => {
+const MapsChild = ({ position, curr }) => {
   const myIcon = new L.Icon({
     iconUrl: curr?.icon,
     // iconRetinaUrl: iconIs,

@@ -18,7 +18,7 @@ import NotFound from './NotFound';
 import LiveDate from './LiveDate';
 import Maps from './Maps';
 import FeaturedCities from './FeaturedCities';
-import countriesList from '../countries/countries.js';
+import countriesList from '../constants/countries.js';
 import SearchIcon from '@mui/icons-material/Search';
 import Loader from './Loader';
 
@@ -150,11 +150,6 @@ const Home = () => {
   return (
     <motion.div
       className={classes.wrapper}
-      // initial={{ opacity: 0, rotateY: 90 }}
-      // animate={{ opacity: 1, rotateY: 0 }}
-      // exit={{ opacity: 0, rotateY: 90 }}
-      // transition={{ duration: 0.5 }}
-      // style={{ transformOrigin: 'center' }}
       variants={contVariants}
       initial="hidden"
       animate="visible"
@@ -178,8 +173,6 @@ const Home = () => {
                 type="text"
                 placeholder="Enter a different city"
                 ref={searchRef}
-                // value={searchTerm}
-                // onChange={e => setSearchTerm(e.target.value)}
               />
               <i onClick={handleInpClick}>
                 <SearchIcon />
@@ -380,8 +373,6 @@ const Home = () => {
       <div className={classes.mapsCitiesContainer}>
         <Maps
           coords={cityDetails?.coord ?? coords}
-          id={cityDetails?.id}
-          icon={cityWeather?.current?.weather[0]?.icon}
           curr={{
             temp: cityWeather?.current?.temp.toFixed(1),
             desc: cityWeather?.current?.weather[0]?.description,

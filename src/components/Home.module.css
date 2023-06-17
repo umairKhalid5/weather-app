@@ -260,7 +260,7 @@ h4 {
     font-size: 1rem;
   }
   .sliderBox {
-    grid-auto-columns: 180px;
+    grid-auto-columns: 205px;
   }
   .box {
     gap: 0.4rem;
